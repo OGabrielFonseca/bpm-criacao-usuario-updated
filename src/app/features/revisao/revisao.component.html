@@ -1,0 +1,56 @@
+<nz-card nzTitle="Dados do Solicitante" [nzLoading]="this.buscandoDadosSolicitante">
+  <app-dados-solicitante [etapaAtual]="etapaAtual" (buscandoDadosSolicitante)="aoBuscarDadosSolicitante($event)"></app-dados-solicitante>
+</nz-card>
+
+<nz-card nzTitle="Dados da Solicitação">
+  <app-dados-solicitacao [etapaAtual]="etapaAtual" (enviaColaborador)="recebeColaborador($event)"></app-dados-solicitacao>
+</nz-card>
+
+<nz-card nzTitle="Gestão Empresarial ERP (Sapiens)" [nzExtra]="gruposSapiensSwitch">
+  @if (possuiGruposSapiens) {
+    <app-grupos
+      #gruposSapiens
+      moduloGrupos="sapiens"
+      [dadosColaborador]="colaborador"
+      (enviaPossuiGrupos)="possuiGruposSapiens = $event"
+      [etapaAtual]="etapaAtual"
+    ></app-grupos>
+  }
+</nz-card>
+
+<ng-template #gruposSapiensSwitch>
+  <nz-switch [nzDisabled]="desabilitaGruposSapiens || this.colaborador.tipcol === '2'"  [(ngModel)]="possuiGruposSapiens"></nz-switch>
+</ng-template>
+
+<nz-card
+  nzTitle="Gestão De Pessoas HCM (Rubi, Ronda Ponto, Ronda Acesso, Segurança e Medicina, Treinamento, Benefícios, Quadro de Lotação)"
+  [nzExtra]="gruposHcmSwitch"
+>
+  @if (possuiGruposHcm) {
+    <app-grupos
+      #gruposHcm
+      moduloGrupos="rubi"
+      [dadosColaborador]="colaborador"
+      (enviaPossuiGrupos)="possuiGruposHcm = $event"
+      [etapaAtual]="etapaAtual"
+    ></app-grupos>
+  }
+</nz-card>
+
+<ng-template #gruposHcmSwitch>
+  <nz-switch [nzDisabled]="desabilitaGruposHcm" [(ngModel)]="possuiGruposHcm"></nz-switch>
+</ng-template>
+
+@if (possuiGruposHcm || possuiGruposSapiens) {
+  <nz-card nzTitle="Vetores">
+    <app-vetores [etapaAtual]="etapaAtual" [dadosColaborador]="colaborador"></app-vetores>
+  </nz-card>
+}
+
+<nz-card nzTitle="Sistemas">
+  <app-sistemas [etapaAtual]="etapaAtual"></app-sistemas>
+</nz-card>
+
+<nz-card nzTitle="Dados Aprovação">
+  <app-dados-aprovacao [etapaAtual]="etapaAtual"></app-dados-aprovacao>
+</nz-card>

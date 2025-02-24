@@ -1,0 +1,102 @@
+<form [formGroup]="formGroup">
+  <div nz-row nzGutter="24">
+    <div nz-col nzSpan="4" class="sistema-row">
+      <nz-checkbox
+        nz-checkbox
+        [formControl]="formGroup.controls.sistemaEngeman"
+        (ngModelChange)="necessitaPerfil($event, formGroup.controls.perfilEngeman)"
+      >
+        Engeman
+      </nz-checkbox>
+    </div>
+    <div nz-col nzSpan="20">
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="perfilEngemanErros">
+          <nz-form-label [nzRequired]="this.sistemaEngeman" [nzTooltipTitle]="tooltipTitle" [nzTooltipIcon]="tooptipIcon">
+            Perfil Engeman
+          </nz-form-label>
+          <input type="text" nz-input [formControl]="formGroup.controls.perfilEngeman" />
+          <ng-template #perfilEngemanErros let-control>
+            @if (control.hasError('required')) {
+              <ng-container>Preenchimento Obrigatório</ng-container>
+            }
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="24">
+    <div nz-col nzSpan="4" class="sistema-row">
+      <nz-checkbox
+        nz-checkbox
+        [formControl]="formGroup.controls.sistemaGatec"
+        (ngModelChange)="necessitaPerfil($event, formGroup.controls.perfilGatec)"
+      >
+        Gatec
+      </nz-checkbox>
+    </div>
+    <div nz-col nzSpan="20">
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="perfilGatecErros">
+          <nz-form-label [nzTooltipTitle]="tooltipTitle" [nzTooltipIcon]="tooptipIcon" [nzRequired]="this.sistemaGatec">Perfil Gatec</nz-form-label>
+          <input type="text" nz-input [formControl]="formGroup.controls.perfilGatec" />
+          <ng-template #perfilGatecErros let-control>
+            @if (control.hasError('required')) {
+              <ng-container>Preenchimento Obrigatório</ng-container>
+            }
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="24">
+    <div nz-col nzSpan="4" class="sistema-row">
+      <nz-checkbox
+        nz-checkbox
+        [formControl]="formGroup.controls.sistemaMega"
+        (ngModelChange)="necessitaPerfil($event, formGroup.controls.perfilMega)"
+      >
+        Mega
+      </nz-checkbox>
+    </div>
+    <div nz-col nzSpan="20">
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="perfilMegaErros">
+          <nz-form-label [nzTooltipTitle]="tooltipTitle" [nzTooltipIcon]="tooptipIcon" [nzRequired]="this.sistemaMega">Perfil Mega</nz-form-label>
+          <input type="text" nz-input [formControl]="formGroup.controls.perfilMega" />
+          <ng-template #perfilMegaErros let-control>
+            @if (control.hasError('required')) {
+              <ng-container>Preenchimento Obrigatório</ng-container>
+            }
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="24">
+    <div nz-col nzSpan="4" class="sistema-row">
+      <nz-checkbox
+        nz-checkbox
+        [formControl]="formGroup.controls.sistemaGestaoMineracao"
+        (ngModelChange)="necessitaPerfil($event, formGroup.controls.perfilGestaoMineracao)"
+      >
+        Gestão de Mineracao
+      </nz-checkbox>
+    </div>
+    <div nz-col nzSpan="20">
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="perfilGestaoMineracaoErros">
+          <nz-form-label [nzTooltipTitle]="tooltipTitle" [nzTooltipIcon]="tooptipIcon" [nzRequired]="this.sistemaGestaoMineracao">
+            Perfil Gestão de Mineracao
+          </nz-form-label>
+          <input type="text" nz-input [formControl]="formGroup.controls.perfilGestaoMineracao" />
+          <ng-template #perfilGestaoMineracaoErros let-control>
+            @if (control.hasError('required')) {
+              <ng-container>Preenchimento Obrigatório</ng-container>
+            }
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>

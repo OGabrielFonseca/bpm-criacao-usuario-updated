@@ -1,0 +1,20 @@
+<form [formGroup]="formGroup">
+  <div nz-row nzGutter="24">
+    <div nz-col nzSpan="6">
+      <label for="">Solicitante</label>
+      <input nz-input type="text" [formControl]="formGroup.controls.nomeSolicitante" />
+    </div>
+    <div nz-col nzSpan="6">
+      <label for="">Empresa</label>
+      <input nz-input type="text" [formControl]="formGroup.controls.empresaSolicitante" />
+    </div>
+    <div nz-col nzSpan="6">
+      <label for="">Local</label>
+      <input nz-input type="text" [formControl]="formGroup.controls.localSolicitante" />
+    </div>
+    <div nz-col nzSpan="6">
+      <label for="">Cargo</label>
+      <input nz-input type="text" [formControl]="formGroup.controls.cargoSolicitante" />
+    </div>
+  </div>
+</form>

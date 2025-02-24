@@ -1,0 +1,89 @@
+<form [formGroup]="formGroup">
+  <div formArrayName="grupos">
+    <nz-table [nzScroll]="{ x: '500px' }" [nzData]="formArray.controls" nzTemplateMode [nzShowPagination]="false">
+      <thead>
+        <tr>
+          <th>Grupo</th>
+          <th style="width: 200px">Aprovador Grupo</th>
+          @if ([Etapa.SOLICITACAO, Etapa.REVISAO].includes(this.etapaAtual)) {
+            <th style="width: 50px" nzRight=""></th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (grupo of formArray.controls; track $index) {
+          <tr>
+            <td>
+              <nz-form-item>
+                <nz-form-control [nzErrorTip]="grupoErros">
+                  <nz-select
+                    type="text"
+                    nz-input
+                    [formControl]="grupo.controls.grupo"
+                    nzShowSearch
+                    nzServerSearch=""
+                    nzNotFoundContent="Nenhum grupo encontrado!"
+                    (nzOnSearch)="pesquisaGrupos($event)"
+                    (nzScrollToBottom)="adicionaMaisGrupos()"
+                    [compareWith]="compararGrupos"
+                  >
+                    @for (grupo of listaGruposSistema; track $index) {
+                      <ng-container>
+                        <nz-option [nzValue]="grupo" [nzLabel]="grupo | descricaoGrupo"></nz-option>
+                      </ng-container>
+                    }
+                    @if (buscandoGrupos) {
+                      <nz-option nzDisabled nzCustomContent>
+                        <span nz-icon nzType="loading" class="loading-icon"></span>
+                        Buscando...
+                      </nz-option>
+                    }
+                  </nz-select>
+                  <ng-template #grupoErros let-control>
+                    @if (control.hasError('repete')) {
+                      <ng-container>Grupo já selecionado!</ng-container>
+                    }
+                    @if (control.hasError('required')) {
+                      <ng-container>Selecione um grupo!</ng-container>
+                    }
+                  </ng-template>
+                </nz-form-control>
+              </nz-form-item>
+            </td>
+            <td>
+              <nz-form-item>
+                <nz-form-control>
+                  <input type="text" nz-input [formControl]="grupo.controls.aprovador" />
+                </nz-form-control>
+              </nz-form-item>
+            </td>
+            @if ([Etapa.SOLICITACAO, Etapa.REVISAO].includes(this.etapaAtual)) {
+              <td nzRight>
+                <nz-form-item>
+                  <nz-form-control>
+                    <button
+                      (click)="formArray.removeAt($index)"
+                      nz-button
+                      nzType="primary"
+                      nzDanger
+                      nzShape="circle"
+                      [disabled]="formArray.controls.length === 1"
+                    >
+                      <span nz-icon nzType="delete" nzTheme="outline"></span>
+                    </button>
+                  </nz-form-control>
+                </nz-form-item>
+              </td>
+            }
+          </tr>
+        }
+      </tbody>
+    </nz-table>
+    <br />
+    @if ([Etapa.SOLICITACAO, Etapa.REVISAO].includes(this.etapaAtual)) {
+      <button (click)="adicionarGrupo()" nz-button nzType="primary" nzShape="circle">
+        <span nz-icon nzType="plus" nzTheme="outline"></span>
+      </button>
+    }
+  </div>
+</form>

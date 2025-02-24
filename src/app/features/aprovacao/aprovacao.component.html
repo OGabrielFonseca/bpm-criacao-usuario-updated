@@ -1,0 +1,33 @@
+<nz-card nzTitle="Dados do Solicitante">
+  <app-dados-solicitante [etapaAtual]="etapaAtual"></app-dados-solicitante>
+</nz-card>
+
+<nz-card nzTitle="Dados da Solicitação">
+  <app-dados-solicitacao [etapaAtual]="etapaAtual"></app-dados-solicitacao>
+</nz-card>
+
+@if (possuiGruposSapiens) {
+  <nz-card nzTitle="Grupos Gestão Empresarial ERP (Sapiens)">
+    <app-grupos #gruposSapiens [etapaAtual]="etapaAtual"></app-grupos>
+  </nz-card>
+}
+
+@if (possuiGruposHcm) {
+  <nz-card nzTitle="Grupos Gestão De Pessoas HCM (Rubi, Ronda Ponto, Ronda Acesso, Segurança e Medicina, Treinamento, Benefícios, Quadro de Lotação)">
+    <app-grupos #gruposHcm [etapaAtual]="etapaAtual"></app-grupos>
+  </nz-card>
+}
+
+@if (possuiGruposHcm || possuiGruposSapiens) {
+  <nz-card nzTitle="Abrangência Empresa/Filial Sistemas Senior">
+    <app-vetores [etapaAtual]="etapaAtual"></app-vetores>
+  </nz-card>
+}
+
+<nz-card nzTitle="Outros Sistemas">
+  <app-sistemas [etapaAtual]="etapaAtual"></app-sistemas>
+</nz-card>
+
+<nz-card nzTitle="Dados Aprovação">
+  <app-dados-aprovacao [etapaAtual]="etapaAtual"></app-dados-aprovacao>
+</nz-card>

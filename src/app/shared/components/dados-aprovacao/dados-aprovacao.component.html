@@ -1,0 +1,25 @@
+<form [formGroup]="formGroup">
+  <div nz-row nzGutter="24">
+    @if (this.etapaAtual === Etapa.REVISAO || this.etapaAtual === Etapa.DETALHES) {
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>Quem solicitou</nz-form-label>
+          <input type="text" nz-input [formControl]="formGroup.controls.quemSolicitouRevisao" />
+        </nz-form-item>
+      </div>
+    }
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="justificativaErros">
+          <nz-form-label>Justificativa</nz-form-label>
+          <textarea nz-input rows="4" [formControl]="formGroup.controls.justificativaRevisao"></textarea>
+          <ng-template #justificativaErros let-control>
+            @if (control.hasError('required')) {
+              <ng-container>Campo obrigatório!</ng-container>
+            }
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>

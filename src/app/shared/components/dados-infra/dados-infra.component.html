@@ -1,0 +1,88 @@
+<form nz-form [formGroup]="formGroup">
+  <div nz-row nzGutter="24">
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-control>
+          <div>
+            <nz-checkbox nz-checkbox [formControl]="formGroup.controls.criarAtualizarAD">Criar Usuário de Rede</nz-checkbox>
+          </div>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="treinamentoErros">
+          <div>
+            <nz-checkbox nz-checkbox [formControl]="formGroup.controls.realizouTreinamento">Realizou Treinamento Segurança T.I.</nz-checkbox>
+          </div>
+        </nz-form-control>
+        <ng-template #treinamentoErros let-control>
+          @if (control.hasError('required')) {
+            <ng-container>Campo obrigatório!</ng-container>
+          }
+        </ng-template>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="24">
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="loginUsuarioErros">
+          <nz-form-label [nzRequired]="criarAtualizarAD">Login Usuário</nz-form-label>
+          <input nz-input type="text" [formControl]="formGroup.controls.loginUsuario" />
+          <ng-template #loginUsuarioErros let-control>
+            @if (control.hasError('required')) {
+              <ng-container>Campo obrigatório!</ng-container>
+            }
+            @if (control.hasError('tamanho')) {
+              <ng-container>O login deve ter no máximo 20 caracteres!</ng-container>
+            }
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="18">
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="unidadeOrganizacionalErros">
+          <nz-form-label [nzRequired]="criarAtualizarAD">OU (Unidade Organizacional)</nz-form-label>
+          <nz-select
+            type="text"
+            nz-input
+            [formControl]="formGroup.controls.unidadeOrganizacional"
+            nzShowSearch
+            (nzOnSearch)="pesquisarUnidades($event)"
+            (nzScrollToBottom)="adicionaMaisUnidades()"
+            [nzLoading]="buscandoUnidades"
+          >
+            @for (unidade of listaUnidades; track $index) {
+              <ng-container>
+                <nz-option [nzValue]="unidade" [nzLabel]="unidade.desuni"></nz-option>
+              </ng-container>
+            }
+            @if (buscandoUnidades) {
+              <nz-option nzDisabled nzCustomContent>
+                <span nz-icon nzType="loading" class="loading-icon"></span>
+                Buscando...
+              </nz-option>
+            }
+          </nz-select>
+        </nz-form-control>
+        <ng-template #unidadeOrganizacionalErros let-control>
+          @if (control.hasError('required')) {
+            <ng-container>Campo obrigatório!</ng-container>
+          }
+        </ng-template>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="24">
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-control>
+          <nz-form-label>Chave Unidade Organizacional</nz-form-label>
+          <input nz-input type="text" [formControl]="formGroup.controls.chaveUnidadeOrganizacional" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>

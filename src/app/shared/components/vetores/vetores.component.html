@@ -1,0 +1,91 @@
+<form [formGroup]="formGroup">
+  <nz-table [nzScroll]="{ x: '500px' }" [nzData]="vetoresFormArray.controls" nzTemplateMode [nzShowPagination]="false">
+    <thead>
+      <tr>
+        <th>Empresa</th>
+        <th>Filial</th>
+        @if ([Etapa.SOLICITACAO, Etapa.REVISAO].includes(this.etapaAtual)) {
+          <th style="width: 50px" nzRight=""></th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (vetor of vetoresFormArray.controls; track $index) {
+        <tr>
+          <td>
+            <nz-form-item>
+              <nz-form-control [nzErrorTip]="empresaVetorErros">
+                <nz-select [nzLoading]="this.buscandoEmpresas" [formControl]="vetor.controls.empresaVetor" [compareWith]="comparaEmpresas">
+                  @for (empresa of empresasLista; track empresa.codemp) {
+                    <ng-container>
+                      <nz-option [nzValue]="empresa" [nzLabel]="empresa.codemp + ' - ' + empresa.nomemp"></nz-option>
+                    </ng-container>
+                  }
+                </nz-select>
+                <ng-template #empresaVetorErros let-control>
+                  @if (control.hasError('required')) {
+                    <ng-container>Preenchimento Obrigatório</ng-container>
+                  }
+                </ng-template>
+              </nz-form-control>
+            </nz-form-item>
+          </td>
+          <td>
+            <nz-form-item>
+              <nz-form-control [nzErrorTip]="filialVetorErros">
+                <nz-select [formControl]="vetor.controls.filialVetor" [compareWith]="comparaFiliais">
+                  @for (filial of filiaisLista[$index]; track filial.codfil) {
+                    <ng-container>
+                      <nz-option [nzValue]="filial" [nzLabel]="filial.codfil + ' - ' + filial.nomfil"></nz-option>
+                    </ng-container>
+                  }
+                  @if (buscandoFiliais) {
+                    <nz-option nzDisabled nzCustomContent>
+                      <span nz-icon nzType="loading" class="loading-icon"></span>
+                      Buscando...
+                    </nz-option>
+                  }
+                </nz-select>
+                <ng-template #filialVetorErros let-control>
+                  @if (control.hasError('required')) {
+                    <ng-container>
+                      Preenchimento Obrigatório
+                      <br />
+                    </ng-container>
+                  }
+                  @if (control.hasError('repete')) {
+                    <ng-container>Filial já selecionada!</ng-container>
+                  }
+                </ng-template>
+              </nz-form-control>
+            </nz-form-item>
+          </td>
+          @if ([Etapa.SOLICITACAO, Etapa.REVISAO].includes(this.etapaAtual)) {
+            <td nzRight>
+              <nz-form-item>
+                <nz-form-control>
+                  <button
+                    (click)="vetoresFormArray.removeAt($index)"
+                    nz-button
+                    nzType="primary"
+                    nzDanger
+                    nzShape="circle"
+                    [disabled]="vetoresFormArray.controls.length === 1 || this.buscandoFiliais"
+                  >
+                    <span nz-icon nzType="delete" nzTheme="outline"></span>
+                  </button>
+                </nz-form-control>
+              </nz-form-item>
+            </td>
+          }
+        </tr>
+      }
+    </tbody>
+  </nz-table>
+  <br />
+  @if ([Etapa.SOLICITACAO, Etapa.REVISAO].includes(this.etapaAtual)) {
+    <button (click)="adicionarVetor()" nz-button nzType="primary" nzShape="circle">
+      <span nz-icon nzType="plus" nzTheme="outline"></span>
+    </button>
+  }
+</form>

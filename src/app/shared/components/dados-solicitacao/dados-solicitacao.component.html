@@ -1,0 +1,114 @@
+<form [formGroup]="formGroup">
+  <div nz-row nzGutter="24">
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="nomeColaboradorErros">
+          <nz-form-label nzRequired>Nome Usuário</nz-form-label>
+          <nz-select
+            (nzOnSearch)="pesquisaColaboradores($event)"
+            (nzScrollToBottom)="adicionaMaisColaboradores()"
+            [nzLoading]="buscandoColaboradores"
+            [formControl]="formGroup.controls.nomeColaborador"
+            nzServerSearch
+            nzShowSearch
+            nzNotFoundContent="Nenhum Colaborador Encontrado"
+          >
+            @for (colaborador of colaboradoresLista; track $index) {
+              <nz-option [nzValue]="colaborador" [nzLabel]="colaborador.nomfun"></nz-option>
+            }
+            @if (buscandoColaboradores) {
+              <nz-option nzDisabled nzCustomContent>
+                <span nz-icon nzType="loading" class="loading-icon"></span>
+                Buscando...
+              </nz-option>
+            }
+          </nz-select>
+          <ng-template #nomeColaboradorErros let-control>
+            @if (control.hasError('required')) {
+              Preenchimento Obrigatório
+            }
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-label>Matrícula</nz-form-label>
+        <input type="text" nz-input [formControl]="formGroup.controls.matriculaColaborador" />
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-label nzRequired>Empresa</nz-form-label>
+        <input type="text" nz-input [formControl]="formGroup.controls.empresaColaborador" />
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-label nzRequired>Filial</nz-form-label>
+        <input type="text" nz-input [formControl]="formGroup.controls.filialColaborador" />
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-label nzRequired>Tipo</nz-form-label>
+        <input type="text" nz-input [formControl]="formGroup.controls.tipoColaborador" />
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-label nzRequired>Local</nz-form-label>
+        <input type="text" nz-input [formControl]="formGroup.controls.localColaborador" />
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-label>Cargo</nz-form-label>
+        <input type="text" nz-input [formControl]="formGroup.controls.cargoColaborador" />
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="usuarioColaboradorErros">
+          <nz-form-label>Usuário</nz-form-label>
+          <input readonly="true" type="text" nz-input [formControl]="formGroup.controls.usuarioColaborador" />
+          <ng-template #usuarioColaboradorErros let-control>
+            @if (control.hasError('usuarioJaCriado')) {
+              Colaborador já possui Usuário! Solicite um BPM de Alteração de Usuário.
+            }
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-label>Telefone Corporativo</nz-form-label>
+        <nz-input-number
+          type="text"
+          [nzPlaceHolder]="'XX XXXXX-XXXX'"
+          [nzFormatter]="converteTelefone"
+          nz-input
+          [formControl]="formGroup.controls.telefoneColaborador"
+        ></nz-input-number>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-label>Ramal</nz-form-label>
+        <nz-input-number
+          type="text"
+          [nzPlaceHolder]="'XXXX'"
+          [nzFormatter]="converteRamal"
+          nz-input
+          [formControl]="formGroup.controls.ramalColaborador"
+        ></nz-input-number>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-label>Informações Adicionais</nz-form-label>
+        <textarea nz-input rows="4" [formControl]="formGroup.controls.informacoesAdicionais"></textarea>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
