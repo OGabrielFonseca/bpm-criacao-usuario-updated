@@ -73,6 +73,7 @@ export class RevisaoComponent implements OnInit, AfterViewInit {
   desabilitaGruposHcm = false;
 
   colaborador!: ColaboradorModel;
+  colaboradorEhTerceiro = false;
 
   variaveisProcesso: Record<string, unknown> = {};
 
@@ -223,6 +224,7 @@ export class RevisaoComponent implements OnInit, AfterViewInit {
     const colaborador = JSON.parse(this.variaveisProcesso['colaborador'] as string) as ColaboradorModel;
     this.solicitacaoComponent.preencherColaborador(colaborador, false);
     this.colaborador = colaborador;
+    this.colaboradorEhTerceiro = colaborador.tipcol === '2';
 
     //carregando dados grupos Sapiens
     const gruposSapiensString = this.variaveisProcesso['gruposSapiens'] as string;

@@ -19,7 +19,7 @@
 </nz-card>
 
 <ng-template #gruposSapiensSwitch>
-  <nz-switch [nzDisabled]="desabilitaGruposSapiens || this.colaborador.tipcol === '2'"  [(ngModel)]="possuiGruposSapiens"></nz-switch>
+  <nz-switch [nzDisabled]="desabilitaGruposSapiens || colaboradorEhTerceiro" [(ngModel)]="possuiGruposSapiens"></nz-switch>
 </ng-template>
 
 <nz-card
